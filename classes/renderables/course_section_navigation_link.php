@@ -48,14 +48,21 @@ class course_section_navigation_link implements \renderable {
     public $title;
 
     /**
+     * @var string section title in HTML
+     */
+    public $titlehtml;
+
+    /**
      * course_section_navigation_link constructor.
      * @param int $section section number
      * @param string $classes additional classes for link
      * @param string $title section title
+     * @param string $titlehtml section title in HTML
      */
-    public function __construct($section, $classes, $title) {
+    public function __construct($section, $classes, $title, $titlehtml = '') {
         $this->section = $section;
         $this->classes = $classes;
         $this->title = $title;
+        $this->titlehtml = $titlehtml;
     }
 }
