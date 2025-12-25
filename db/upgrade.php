@@ -182,5 +182,28 @@ function xmldb_theme_snap_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025042100, 'theme', 'snap');
     }
 
+    if ($oldversion < 2025122600) {
+        // Define table theme_snap_course_settings to be created.
+        $table = new xmldb_table('theme_snap_course_settings');
+
+        // Adding fields to table theme_snap_course_settings.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('courseid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('multilangsectionnames', XMLDB_TYPE_CHAR, '10', null, XMLDB_NOTNULL, null, 'auto');
+        $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+
+        // Adding keys to table theme_snap_course_settings.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+        $table->add_key('courseid', XMLDB_KEY_FOREIGN_UNIQUE, ['courseid'], 'course', ['id']);
+
+        // Conditionally launch create table for theme_snap_course_settings.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Snap savepoint reached.
+        upgrade_plugin_savepoint(true, 2025122600, 'theme', 'snap');
+    }
+
     return true;
 }

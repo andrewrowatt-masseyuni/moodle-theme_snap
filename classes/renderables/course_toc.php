@@ -25,6 +25,7 @@ namespace theme_snap\renderables;
 
 use context_course;
 use moodle_url;
+use theme_snap\course_settings;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -226,7 +227,7 @@ class course_toc implements \renderable, \templatable {
                 }
             }
 
-            $chapter->title = $this->format->get_section_name($section);
+            $chapter->title = $this->get_section_title($thissection);
             if ($chapter->title == get_string('general')) {
                 $chapter->title = get_string('introduction', 'theme_snap');
             }
@@ -283,6 +284,43 @@ class course_toc implements \renderable, \templatable {
             'imgurladdnewsection' => $OUTPUT->image_url('pencil', 'theme'),
             'imgurltools' => $OUTPUT->image_url('course_dashboard', 'theme'),
         ];
+    }
+
+    /**
+     * Get the section title based on the multi-language section names setting.
+     *
+     * @param \section_info $section The section info object.
+     * @return string The section title.
+     */
+    protected function get_section_title(\section_info $section): string {
+        $setting = course_settings::get_multilang_section_names($this->course->id);
+        $rawname = $section->name;
+        $context = context_course::instance($this->course->id);
+
+        // If no custom name, use the format's default section name.
+        if (empty($rawname)) {
+            return $this->format->get_section_name($section);
+        }
+
+        switch ($setting) {
+            case course_settings::MULTILANG_YES:
+                // Always apply format_string which includes multilang filtering.
+                return format_string($rawname, true, ['context' => $context]);
+
+            case course_settings::MULTILANG_NO:
+                // Return the raw name without multilang filtering.
+                // Use format_string with noclean to preserve HTML but skip filters.
+                return format_string($rawname, true, ['context' => $context, 'filter' => false]);
+
+            case course_settings::MULTILANG_AUTO:
+            default:
+                // Check if the section name contains multilang tags.
+                if (course_settings::contains_multilang_tags($rawname)) {
+                    return format_string($rawname, true, ['context' => $context]);
+                }
+                // No multilang tags, return the formatted name (still applies other formatting).
+                return format_string($rawname, true, ['context' => $context]);
+        }
     }
 
 }

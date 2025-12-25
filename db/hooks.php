@@ -27,4 +27,19 @@ $callbacks = [
         'callback' => [\theme_snap\hook_callbacks::class, 'before_footer_html_generation'],
         'priority' => 0,
     ],
+    [
+        'hook' => \core_course\hook\after_form_definition::class,
+        'callback' => [\theme_snap\hook_callbacks::class, 'after_course_form_definition'],
+        'priority' => 0,
+    ],
+    [
+        'hook' => \core_course\hook\after_form_definition_after_data::class,
+        'callback' => [\theme_snap\hook_callbacks::class, 'after_course_form_definition_after_data'],
+        'priority' => 0,
+    ],
+    [
+        'hook' => \core_course\hook\after_form_submission::class,
+        'callback' => [\theme_snap\hook_callbacks::class, 'after_course_form_submission'],
+        'priority' => 0,
+    ],
 ];
