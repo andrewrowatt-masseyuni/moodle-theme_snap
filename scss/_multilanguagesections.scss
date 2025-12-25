@@ -33,6 +33,11 @@ span.mlnc {
             display: none;
         }
 
+        span {
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
         span.n1 {
             grid-row: 2;
             line-height: 1.2;
