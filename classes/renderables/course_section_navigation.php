@@ -74,11 +74,7 @@ class course_section_navigation implements \renderable {
                 }
 
                 // Massey University customisation: Use multi-language section names if enabled.
-                $usemlnames = \theme_snap\util_sections::get_use_multilanguage_section_names($course->id);
-                $titlehtml = '';
-                if ($usemlnames === 'Yes') {
-                    $titlehtml = \theme_snap\util_sections::format_multilanguage_text($sectiontitle);
-                }
+                $titlehtml = \theme_snap\util_sections::format_multilanguage_text($sectiontitle);
 
                 $this->previous = new course_section_navigation_link($target, $extraclasses, $sectiontitle, $titlehtml);
             }
@@ -103,11 +99,7 @@ class course_section_navigation implements \renderable {
                 }
 
                 // Massey University customisation: Use multi-language section names if enabled.
-                $usemlnames = \theme_snap\util_sections::get_use_multilanguage_section_names($course->id);
-                $titlehtml = '';
-                if ($usemlnames === 'Yes') {
-                    $titlehtml = \theme_snap\util_sections::format_multilanguage_text($sectiontitle);
-                }
+                $titlehtml = \theme_snap\util_sections::format_multilanguage_text($sectiontitle);
 
                 $this->next = new course_section_navigation_link($target, $extraclasses, $sectiontitle, $titlehtml);
             }

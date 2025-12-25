@@ -29,17 +29,21 @@ class util_sections {
      * Get the value of the "usemultilanguagesectionnames" course custom field.
      * Field definition: Use multi-language section names | usemultilanguagesectionnames | Dropdown menu | No, Yes, Auto
      *
-     * @param int $courseid The course ID.
      * @return string The custom field value, or 'No' if not set.
      */
-    public static function get_use_multilanguage_section_names(int $courseid): string {
-        $handler = \core_course\customfield\course_handler::create();
-        $data = $handler->export_instance_data_object($courseid, true);
+    private static function get_use_multilanguage_section_names(): string {
+        global $COURSE;
 
+        $handler = \core_course\customfield\course_handler::create();
+        $data = $handler->export_instance_data_object($COURSE->id, true);
         return $data->usemultilanguagesectionnames ?? 'No';
     }
 
     public static function format_multilanguage_text(string $text): string {
+        if (self::get_use_multilanguage_section_names() === 'No') {
+            return ''; /* Return blank to short-curcuit downstream rendering processes */
+        }
+
         $parts = explode('|', $text);
         $spans = [];
 
