@@ -375,9 +375,12 @@ trait format_section_trait {
             if ($section->section != 0 && $leftnavtop != 0 ) {
                 $sectiontitle = '<span class=\'sectionnumber\'></span>' . $sectiontitle;
             }
+            // Massey University customisation: Use multi-language section names if enabled.
+            $titlehtml = \theme_snap\util_sections::format_multilanguage_text($sectiontitle);
+
             $htmlheading = html_writer::tag(
                 'h' . 2,
-                $sectiontitle,
+                $titlehtml ?? $sectiontitle,
                 array(
                     'id' => $sectionid,
                     'class' => 'sectionname',
