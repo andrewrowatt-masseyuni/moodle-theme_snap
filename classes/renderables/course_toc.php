@@ -230,6 +230,11 @@ class course_toc implements \renderable, \templatable {
             if ($chapter->title == get_string('general')) {
                 $chapter->title = get_string('introduction', 'theme_snap');
             }
+            // Massey University customisation: Use multi-language section names if enabled.
+            $usemlnames = \theme_snap\util_sections::get_use_multilanguage_section_names($this->course->id);
+            if ($usemlnames === 'Yes') {
+                $chapter->titlehtml = \theme_snap\util_sections::format_multilanguage_text($chapter->title);
+            }
 
             $chapter->iscurrent = false;
             if ($this->format->is_section_current($section)) {

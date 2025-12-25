@@ -24,7 +24,7 @@
     <h3>
     <li class="{{classes}}">
         {{#outputlink}}
-            <a class="chapter-title" aria-current="false" section-id="{{sectionid}}" section-number="{{section}}" href="{{url}}" title="{{title}}">{{{title}}}</a>
+            <a class="chapter-title" aria-current="false" section-id="{{sectionid}}" section-number="{{section}}" href="{{url}}" title="{{title}}">{{^titlehtml}}{{{title}}}{{/titlehtml}}{{#titlehtml}}{{{titlehtml}}}{{/titlehtml}}</a>
         {{/outputlink}}
         {{^outputlink}}
             <span class="chapter-title" aria-current="false" section-id="{{sectionid}}" section-number="{{section}}" title="{{title}}>{{title}}</span>
